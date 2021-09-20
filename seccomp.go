@@ -626,11 +626,13 @@ func NewFilter(defaultAction ScmpAction) (*ScmpFilter, error) {
 	filter.valid = true
 	runtime.SetFinalizer(filter, filterFinalizer)
 
-	// Enable TSync so all goroutines will receive the same rules.
-	// If the kernel does not support TSYNC, allow us to continue without error.
-	if err := filter.setFilterAttr(filterAttrTsync, 0x1); err != nil && err != syscall.ENOTSUP {
-		filter.Release()
-		return nil, fmt.Errorf("could not create filter - error setting tsync bit: %v", err)
+	if err := checkVersion("TSync", 2, 2, 0); err == nil {
+		// Enable TSync so all goroutines will receive the same rules.
+		// If the kernel does not support TSYNC, allow us to continue without error.
+		if err := filter.setFilterAttr(filterAttrTsync, 0x1); err != nil && err != syscall.ENOTSUP {
+			filter.Release()
+			return nil, fmt.Errorf("could not create filter - error setting tsync bit: %v", err)
+		}
 	}
 
 	return filter, nil
