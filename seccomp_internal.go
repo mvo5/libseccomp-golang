@@ -26,9 +26,9 @@ import (
 #include <seccomp.h>
 
 #if SCMP_VER_MAJOR < 2
-#error Minimum supported version of Libseccomp is v2.2.0
-#elif SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR < 2
-#error Minimum supported version of Libseccomp is v2.2.0
+#error Minimum supported version of Libseccomp is v2.1.0
+#elif SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR < 1
+#error Minimum supported version of Libseccomp is v2.1.0
 #endif
 
 #define ARCH_BAD ~0
@@ -142,6 +142,10 @@ const int      C_CMP_MASKED_EQ     = (int)SCMP_CMP_MASKED_EQ;
 const int      C_VERSION_MAJOR     = SCMP_VER_MAJOR;
 const int      C_VERSION_MINOR     = SCMP_VER_MINOR;
 const int      C_VERSION_MICRO     = SCMP_VER_MICRO;
+
+#if SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR < 2
+#define SCMP_FLTATR_CTL_TSYNC 4
+#endif
 
 #if SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR >= 3
 unsigned int get_major_version()
@@ -322,7 +326,7 @@ func checkVersion(op string, major, minor, micro uint) error {
 }
 
 func ensureSupportedVersion() error {
-	return checkVersion("seccomp", 2, 2, 0)
+	return checkVersion("seccomp", 2, 1, 0)
 }
 
 // Get the API level
