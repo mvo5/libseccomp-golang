@@ -444,8 +444,8 @@ func (f *ScmpFilter) addRuleGeneric(call ScmpSyscall, action ScmpAction, exact b
 			return err
 		}
 	} else {
-		// We don't support conditional filtering in library version v2.1
-		if err := checkVersion("conditional filtering", 2, 2, 1); err != nil {
+		// trusty libseccomp supports conditional filtering with 2.1.1
+		if err := checkVersion("conditional filtering", 2, 1, 1); err != nil {
 			return err
 		}
 
