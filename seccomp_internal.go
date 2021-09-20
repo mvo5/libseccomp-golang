@@ -35,6 +35,38 @@ import (
 
 const uint32_t C_ARCH_BAD = ARCH_BAD;
 
+#ifndef SCMP_ARCH_AARCH64
+#define SCMP_ARCH_AARCH64 ARCH_BAD
+#endif
+
+#ifndef SCMP_ARCH_MIPS
+#define SCMP_ARCH_MIPS ARCH_BAD
+#endif
+
+#ifndef SCMP_ARCH_MIPS64
+#define SCMP_ARCH_MIPS64 ARCH_BAD
+#endif
+
+#ifndef SCMP_ARCH_MIPS64N32
+#define SCMP_ARCH_MIPS64N32 ARCH_BAD
+#endif
+
+#ifndef SCMP_ARCH_MIPSEL
+#define SCMP_ARCH_MIPSEL ARCH_BAD
+#endif
+
+#ifndef SCMP_ARCH_MIPSEL64
+#define SCMP_ARCH_MIPSEL64 ARCH_BAD
+#endif
+
+#ifndef SCMP_ARCH_MIPSEL64N32
+#define SCMP_ARCH_MIPSEL64N32 ARCH_BAD
+#endif
+
+#if SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR < 2
+#define SCMP_FLTATR_CTL_TSYNC 4
+#endif
+
 #ifndef SCMP_ARCH_PPC
 #define SCMP_ARCH_PPC ARCH_BAD
 #endif
@@ -142,10 +174,6 @@ const int      C_CMP_MASKED_EQ     = (int)SCMP_CMP_MASKED_EQ;
 const int      C_VERSION_MAJOR     = SCMP_VER_MAJOR;
 const int      C_VERSION_MINOR     = SCMP_VER_MINOR;
 const int      C_VERSION_MICRO     = SCMP_VER_MICRO;
-
-#if SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR < 2
-#define SCMP_FLTATR_CTL_TSYNC 4
-#endif
 
 #if SCMP_VER_MAJOR == 2 && SCMP_VER_MINOR >= 3
 unsigned int get_major_version()
